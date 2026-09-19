@@ -1,0 +1,39 @@
+name: RandomDiary
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: ""   # 自分のTeam IDを設定してください
+targets:
+  RandomDiary:
+    type: application
+    platform: iOS
+    sources:
+      - App
+      - Shared
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: ランダム日記
+        UILaunchScreen: {}
+        NSLocationWhenInUseUsageDescription: 日記に「いま、どこにいるか」を記録するために位置情報を使用します。
+        NSPhotoLibraryUsageDescription: 日記に写真を添付するために使用します。
+        CFBundleURLTypes:
+          - CFBundleURLSchemes: [randomdiary]
+    dependencies:
+      - target: DiaryWidgets
+  DiaryWidgets:
+    type: app-extension
+    platform: iOS
+    sources:
+      - DiaryWidgets
+      - Shared/OpenComposeIntent.swift
+    info:
+      path: DiaryWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: ランダム日記
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
